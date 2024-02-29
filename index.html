@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Match Data</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .frame {
+            height: 600px;
+            overflow-y: auto;
+        }
+
+        textarea {
+            width: 100%;
+            height: 80%;
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="frame">
+                <h5>Combined Matches</h5>
+                <textarea id="text-edit-1" readonly></textarea>
+                <button type="button" class="btn btn-primary" id="btn-primary-action">Primary Action</button>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="frame">
+                <h5>Archives Matches</h5>
+                <textarea id="text-edit-2" readonly></textarea>
+                <button type="button" class="btn btn-primary" id="btn-archives-action">Archives Action</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Windows and Buttons -->
+    <div class="row mt-3">
+        <div class="col-sm-3">
+            <div class="frame">
+                <h5>Fonk1</h5>
+                <textarea id="text-fonk1" readonly></textarea>
+                <button type="button" class="btn btn-primary" id="btn-topla">Topla</button>
+                <button type="button" class="btn btn-primary" id="btn-cikar">Çıkar</button>
+                <button type="button" class="btn btn-primary" id="btn-bol">Böl</button>
+                <button type="button" class="btn btn-primary" id="btn-getir">Getir</button>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="frame">
+                <h5>Fonk2</h5>
+                <textarea id="text-fonk2" readonly></textarea>
+                <button type="button" class="btn btn-primary" id="btn-topla2">Topla</button>
+                <button type="button" class="btn btn-primary" id="btn-cikar2">Çıkar</button>
+                <button type="button" class="btn btn-primary" id="btn-bol2">Böl</button>
+                <button type="button" class="btn btn-primary" id="btn-getir2">Getir</button>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="frame">
+                <h5>Fonk3</h5>
+                <textarea id="text-fonk3" readonly></textarea>
+                <button type="button" class="btn btn-primary" id="btn-topla3">Topla</button>
+                <button type="button" class="btn btn-primary" id="btn-cikar3">Çıkar</button>
+                <button type="button" class="btn btn-primary" id="btn-bol3">Böl</button>
+                <button type="button" class="btn btn-primary" id="btn-getir3">Getir</button>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="frame">
+                <h5>Fonk4</h5>
+                <textarea id="text-fonk4" readonly></textarea>
+                <button type="button" class="btn btn-primary" id="btn-topla4">Topla</button>
+                <button type="button" class="btn btn-primary" id="btn-cikar4">Çıkar</button>
+                <button type="button" class="btn btn-primary" id="btn-bol4">Böl</button>
+                <button type="button" class="btn btn-primary" id="btn-getir4">Getir</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Açılır kapanır metin kutusu -->
+    <div class="row mt-3">
+        <div class="col">
+            <button class="btn btn-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExplanation" aria-expanded="false" aria-controls="collapseExplanation">
+                Açıklama
+            </button>
+            <div class="collapse mt-2" id="collapseExplanation">
+                <div class="card card-body">
+                    <strong>const [_, eid, ede, edh, en, sc, minute, st]:</strong>
+                    <p>Bu satır, bir desen eşleşmesinin sonuçlarını parçalıyor. İşte her bir değişkenin anlamı:</p>
+                    <ul>
+                        <li><strong>eid</strong>: Maçın benzersiz kimliği (Match ID)</li>
+                        <li><strong>ede</strong>: Maçın tarihi (Match date)</li>
+                        <li><strong>edh</strong>: Maçın saati (Match hour)</li>
+                        <li><strong>en</strong>: Maçın adı veya ismi (Match name)</li>
+                        <li><strong>sc</strong>: Maçın skoru (Match score). Maç henüz başlamamışsa bu değer olmayabilir veya boş olabilir.</li>
+                        <li><strong>minute</strong>: Maçın oynanmış olduğu dakika (Match minute). Maç henüz başlamamışsa veya dakika bilgisi yoksa bu değer olmayabilir veya boş olabilir.</li>
+                        <li><strong>st</strong>: Maçın durumu (Match status). Bu genellikle "başlamadı", "devam ediyor", "yarıda", "tamamlandı" gibi değerler alır.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Firebase App (the core Firebase SDK) -->
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js"></script>
+<!-- Firebase Analytics -->
+<script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js"></script>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyB09nx9pgg2-DciSJjGMgByvEb3RhC2LPQ",
+    authDomain: "maclar-ee546.firebaseapp.com",
+    projectId: "maclar-ee546",
+    storageBucket: "maclar-ee546.appspot.com",
+    messagingSenderId: "68138810876",
+    appId: "1:68138810876:web:fa51f4a406f92186a7c679",
+    measurementId: "G-T0921TQCZ9"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
